@@ -37,7 +37,7 @@ object NetworkManager : ArtworkApi{
 
 
     override fun postArtwork(jsonObject: JSONObject) {
-        val url = URL("")
+        val url = URL("") //TODO
         val conn = url.openConnection() as HttpsURLConnection
         conn.requestMethod = "POST"
         conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")
