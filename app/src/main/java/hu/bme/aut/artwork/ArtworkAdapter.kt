@@ -17,8 +17,8 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
         artworks = ArrayList()
 
 
-        val temp = networkManager.getArtworks("") //TODO
-        handleJson(temp)
+        //val temp = networkManager.getArtworks("") //TODO
+        //handleJson(temp)
 
     }
 
@@ -40,13 +40,13 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
     }
 
     fun addArtwork(newArtwork: Artwork) {
-        //artworks.add(newArtwork)
-        val jsonObject = buidJsonObject(newArtwork)
-        networkManager.postArtwork(jsonObject)
+        artworks.add(newArtwork)
+        //val jsonObject = buidJsonObject(newArtwork)
+       // networkManager.postArtwork(jsonObject)
     }
 
     private fun buidJsonObject(newArtwork: Artwork): JSONObject {
-        //TODO 
+        //TODO
         val jsonObject = JSONObject()
         jsonObject.accumulate("name", newArtwork.name)
         jsonObject.accumulate("prize", newArtwork.prize)
