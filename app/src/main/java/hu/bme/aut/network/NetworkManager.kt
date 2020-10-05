@@ -1,5 +1,6 @@
 package hu.bme.aut.network
 
+import android.util.Log
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
@@ -14,7 +15,7 @@ object NetworkManager : ArtworkApi{
 
         try {
             val url = URL(urlAddress)
-            val conn = url.openConnection() as HttpsURLConnection
+            val conn = url.openConnection() as HttpURLConnection
 
             var reader =  BufferedReader(InputStreamReader(conn.inputStream))
 
@@ -25,7 +26,7 @@ object NetworkManager : ArtworkApi{
             } while(line != null)
 
         }catch(e: Exception) {
-
+            Log.e("network-err", e.toString())
         }
         finally {
 
@@ -37,7 +38,7 @@ object NetworkManager : ArtworkApi{
 
 
     override fun postArtwork(jsonObject: JSONObject) {
-        val url = URL("") //TODO
+        val url = URL("http://localhost:8080/api/photo") //TODO
         val conn = url.openConnection() as HttpsURLConnection
         conn.requestMethod = "POST"
         conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")

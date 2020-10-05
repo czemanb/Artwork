@@ -26,7 +26,7 @@ class ArtworkActivity : AppCompatActivity(), AddArtWorkDialogFragment.AddArtwork
     private fun initRecyclerView() {
         MainRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ArtworkAdapter()
-        adapter.addArtwork(Artwork("Mona Lisa",5000000,"Louvre"))
+        adapter.addArtwork(Artwork("Mona Lisa","Louvre",5000000))
 
         MainRecyclerView.adapter = adapter
     }

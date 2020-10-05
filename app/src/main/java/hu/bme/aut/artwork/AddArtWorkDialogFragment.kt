@@ -36,8 +36,9 @@ class AddArtWorkDialogFragment : AppCompatDialogFragment() {
             .setPositiveButton(R.string.ok) { _, _ ->
                 listener?.onArtworkAdded(
                     Artwork(nameEditText?.text.toString(),
+                             ownerEditText?.text.toString(),
                             prizeEditText?.text.toString().toInt(),
-                             ownerEditText?.text.toString())
+                    )
                 )
             }
             .setNegativeButton(R.string.cancel, null)

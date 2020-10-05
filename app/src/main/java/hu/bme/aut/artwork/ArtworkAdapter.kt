@@ -17,8 +17,8 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
         artworks = ArrayList()
 
 
-        //val temp = networkManager.getArtworks("") //TODO
-        //handleJson(temp)
+        val temp = networkManager.getArtworks("http://localhost:8080/api/photo") //TODO
+        handleJson(temp)
 
     }
 
@@ -40,16 +40,16 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
     }
 
     fun addArtwork(newArtwork: Artwork) {
-        artworks.add(newArtwork)
-        //val jsonObject = buidJsonObject(newArtwork)
-       // networkManager.postArtwork(jsonObject)
+//        artworks.add(newArtwork)
+        val jsonObject = buidJsonObject(newArtwork)
+        networkManager.postArtwork(jsonObject)
     }
 
     private fun buidJsonObject(newArtwork: Artwork): JSONObject {
         //TODO
         val jsonObject = JSONObject()
         jsonObject.accumulate("name", newArtwork.name)
-        jsonObject.accumulate("prize", newArtwork.prize)
+        jsonObject.accumulate("price", newArtwork.prize)
         jsonObject.accumulate("owner", newArtwork.owner)
 
 
@@ -63,13 +63,13 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
         var i = 0
         while (i < jsonArray.length()) {
             val jsonObject = jsonArray.getJSONObject(i)
-            artworks.add(
-                Artwork(
-                    jsonObject.getString("name"),
-                    jsonObject.getInt("prize"),
-                    jsonObject.getString("owner")
-                )
-            )
+
+            val id = jsonObject.getLong("id")
+            val name = jsonObject.getString("name")
+            val owner = jsonObject.getString("owner")
+            val price = jsonObject.getInt("price")
+
+            artworks.add(Artwork(name, owner, price))
             i++
         }
 
