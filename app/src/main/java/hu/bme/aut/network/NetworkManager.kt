@@ -1,6 +1,8 @@
 package hu.bme.aut.network
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
@@ -9,7 +11,9 @@ import javax.net.ssl.HttpsURLConnection
 
 object NetworkManager : ArtworkApi{
 
-    override fun getArtworks(urlAddress: String): String {
+    //forrás: https://stackoverflow.com/questions/29465996/how-to-get-json-object-using-httpurlconnection-instead-of-volley/29466338
+    //https://developer.android.com/kotlin/coroutines-adv
+    override suspend fun getArtworks(urlAddress: String): String = withContext(Dispatchers.IO) {
 
         val result = StringBuilder()
 
@@ -26,32 +30,40 @@ object NetworkManager : ArtworkApi{
             } while(line != null)
 
         }catch(e: Exception) {
+
             Log.e("network-err", e.toString())
+
         }
         finally {
 
         }
 
 
-        return result.toString();
+        return@withContext result.toString()
     }
 
 
-    override fun postArtwork(jsonObject: JSONObject) {
-        val url = URL("http://localhost:8080/api/photo") //TODO
-        val conn = url.openConnection() as HttpsURLConnection
-        conn.requestMethod = "POST"
-        conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")
+    //forrás: https://hmkcode.com/android-send-json-data-to-server/
+    override suspend fun postArtwork(jsonObject: JSONObject) : String {
 
-        setPostRequestContent(conn, jsonObject)
-        conn.connect()
-        conn.responseMessage + ""
+        val result = withContext(Dispatchers.IO) {
+            val url = URL("http://localhost:8080/api/photo") 
+
+
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "POST"
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")
+
+            setPostRequestContent(conn, jsonObject)
+            conn.connect()
+            conn.responseMessage + ""
+        }
+        return result
     }
 
 
 
     private fun setPostRequestContent(conn: HttpURLConnection, jsonObject: JSONObject) {
-
         val os = conn.outputStream
         val writer = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
         writer.write(jsonObject.toString())

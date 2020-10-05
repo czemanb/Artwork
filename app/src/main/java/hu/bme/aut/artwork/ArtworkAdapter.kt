@@ -16,7 +16,6 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
     init {
         artworks = ArrayList()
 
-
         val temp = networkManager.getArtworks("http://localhost:8080/api/photo") //TODO
         handleJson(temp)
 
@@ -60,8 +59,7 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
 
         val jsonArray = JSONArray(jsonString)
 
-        var i = 0
-        while (i < jsonArray.length()) {
+        for (i in 0 until jsonArray.length()) {
             val jsonObject = jsonArray.getJSONObject(i)
 
             val id = jsonObject.getLong("id")
@@ -70,7 +68,7 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
             val price = jsonObject.getInt("price")
 
             artworks.add(Artwork(name, owner, price))
-            i++
+
         }
 
     }
