@@ -1,7 +1,7 @@
 package hu.bme.aut.model
 
 data class Artwork (
-    var name: String?,
-    var owner: String?,
-    var prize: Int?
+    val name: String,
+    val owner: String,
+    val price: Int
 )

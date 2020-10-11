@@ -13,7 +13,7 @@ import hu.bme.aut.model.Artwork
 class AddArtWorkDialogFragment : AppCompatDialogFragment() {
     private var listener: AddArtworkDialogListener? = null
     private var nameEditText: EditText? = null
-    private var prizeEditText: EditText? = null
+    private var priceEditText: EditText? = null
     private var ownerEditText: EditText? = null
 
     interface AddArtworkDialogListener {
@@ -37,7 +37,7 @@ class AddArtWorkDialogFragment : AppCompatDialogFragment() {
                 listener?.onArtworkAdded(
                     Artwork(nameEditText?.text.toString(),
                              ownerEditText?.text.toString(),
-                            prizeEditText?.text.toString().toInt(),
+                            priceEditText?.text.toString().toInt(),
                     )
                 )
             }
@@ -49,7 +49,7 @@ class AddArtWorkDialogFragment : AppCompatDialogFragment() {
         get() {
             val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_artwork, null)
             nameEditText = view.findViewById(R.id.etNewArtworkName)
-            prizeEditText = view.findViewById(R.id.etNewArtworkPrize)
+            priceEditText = view.findViewById(R.id.etNewArtworkPrice)
             ownerEditText = view.findViewById(R.id.etNewArtworkOwner)
             return view
         }
