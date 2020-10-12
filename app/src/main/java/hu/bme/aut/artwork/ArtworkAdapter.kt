@@ -14,14 +14,13 @@ import kotlinx.coroutines.launch
 
 
 class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() {
-    private var artworks: List<Artwork>
-    private val networkManager = NetworkManager
-
+   private var artworks: MutableList<Artwork>
 
     init {
         artworks = ArrayList()
         GlobalScope.launch(Dispatchers.IO) {
-            artworks = networkManager.getArtworks()
+            val temp = NetworkManager.getArtworks()
+            artworks.addAll(temp)
 
         }
 
@@ -45,12 +44,12 @@ class ArtworkAdapter : RecyclerView.Adapter<ArtworkAdapter.ArtworkViewHolder>() 
     }
 
     fun addArtwork(newArtwork: Artwork) {
-        networkManager.addArtwork(newArtwork) {
+        artworks.add(newArtwork)
+        NetworkManager.addArtwork(newArtwork) {
             if (it?.name != null) {
-                // it = newly added user parsed as response
-                // it?.id = newly added user ID
+                Log.d("TAG", "Registering new artwork")
             } else {
-                Log.d("TAG", "Error registering new user")
+                Log.d("TAG", "Error registering new artwork")
             }
         }
     }

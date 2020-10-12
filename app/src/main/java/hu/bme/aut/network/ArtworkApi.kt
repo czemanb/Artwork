@@ -1,7 +1,6 @@
 package hu.bme.aut.network
 
 import hu.bme.aut.model.Artwork
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
